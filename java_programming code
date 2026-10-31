@@ -1,0 +1,158 @@
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Participant {
+    int id;
+    String name, email, event;
+
+    Participant(int id, String name, String email, String event) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.event = event;
+    }
+
+    void display() {
+        System.out.println("ID: " + id);
+        System.out.println("Name: " + name);
+        System.out.println("Email: " + email);
+        System.out.println("Event: " + event);
+        System.out.println("----------------------");
+    }
+}
+
+public class EventManagementSystem {
+
+    static ArrayList<Participant> list = new ArrayList<>();
+    static Scanner sc = new Scanner(System.in);
+    static int id = 1;
+
+    static void register() {
+        System.out.print("Enter Name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter Email: ");
+        String email = sc.nextLine();
+
+        System.out.print("Enter Event Name: ");
+        String event = sc.nextLine();
+
+        list.add(new Participant(id++, name, email, event));
+
+        System.out.println("Registration Successful!");
+    }
+
+    static void view() {
+        if (list.isEmpty()) {
+            System.out.println("No Participants Found!");
+            return;
+        }
+
+        for (Participant p : list) {
+            p.display();
+        }
+    }
+
+    static void search() {
+        System.out.print("Enter Participant ID: ");
+        int searchId = Integer.parseInt(sc.nextLine());
+
+        for (Participant p : list) {
+            if (p.id == searchId) {
+                p.display();
+                return;
+            }
+        }
+
+        System.out.println("Participant Not Found!");
+    }
+
+    static void update() {
+        System.out.print("Enter Participant ID: ");
+        int updateId = Integer.parseInt(sc.nextLine());
+
+        for (Participant p : list) {
+            if (p.id == updateId) {
+                System.out.print("Enter New Name: ");
+                p.name = sc.nextLine();
+
+                System.out.print("Enter New Email: ");
+                p.email = sc.nextLine();
+
+                System.out.print("Enter New Event: ");
+                p.event = sc.nextLine();
+
+                System.out.println("Details Updated Successfully!");
+                return;
+            }
+        }
+
+        System.out.println("Participant Not Found!");
+    }
+
+    static void delete() {
+        System.out.print("Enter Participant ID: ");
+        int deleteId = Integer.parseInt(sc.nextLine());
+
+        for (Participant p : list) {
+            if (p.id == deleteId) {
+                list.remove(p);
+                System.out.println("Registration Deleted!");
+                return;
+            }
+        }
+
+        System.out.println("Participant Not Found!");
+    }
+
+    public static void main(String[] args) {
+
+        int choice;
+
+        do {
+            System.out.println("\n===== EVENT MANAGEMENT SYSTEM =====");
+            System.out.println("1. Register Participant");
+            System.out.println("2. View Participants");
+            System.out.println("3. Search Participant");
+            System.out.println("4. Update Participant");
+            System.out.println("5. Delete Registration");
+            System.out.println("0. Exit");
+
+            System.out.print("Enter Your Choice: ");
+            choice = Integer.parseInt(sc.nextLine());
+
+            switch (choice) {
+                case 1:
+                    register();
+                    break;
+
+                case 2:
+                    view();
+                    break;
+
+                case 3:
+                    search();
+                    break;
+
+                case 4:
+                    update();
+                    break;
+
+                case 5:
+                    delete();
+                    break;
+
+                case 0:
+                    System.out.println("Thank You!");
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice!");
+            }
+
+        } while (choice != 0);
+
+        sc.close();
+    }
+}
